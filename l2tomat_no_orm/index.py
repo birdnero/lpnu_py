@@ -1,4 +1,4 @@
-from user import User, Client, Driver, ATBprovider
+from user import User, Client, Driver, ATBprovider, DriverIndex
 from order import OrderTomato, OrderService
 
 u = User(name="Andriy", surname="Fediv", login="andriy123", passwd="soelceenraet123")
@@ -30,7 +30,7 @@ driver2 = Driver(
 )
 
 
-print("Drivers index:", list(map(str, Driver.get_driver_index())))
+print("Drivers index:", list(map(str, DriverIndex.get_driver_index())))
 
 
 order1 = OrderService.create_order(client)

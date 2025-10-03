@@ -1,4 +1,4 @@
-from user import Driver, ATBprovider, Client
+from user import Driver, ATBprovider, Client, DriverIndex
 
 class Order:
     __idGen = 0
@@ -54,7 +54,7 @@ class OrderTomato:
 class OrderService:
     @staticmethod
     def create_order(client: Client):
-        l = list(filter(lambda x: not x.busy, Driver.get_driver_index()))
+        l = list(filter(lambda x: not x.busy, DriverIndex.get_driver_index()))
         if len(l) == 0:
             return None
         l[0].busy = True

@@ -89,12 +89,6 @@ class Client(User, Imaker):
 
 
 class Driver(User, Imaker):
-    __driver_index: list = []
-    
-    @classmethod
-    def get_driver_index(cls):
-        return cls.__driver_index.copy()
-        
     @classmethod
     def make(cls, user: User):
         return Driver(name=user.name, surname=user.surname, login=user.login, passwd=user.passwd)
@@ -108,7 +102,7 @@ class Driver(User, Imaker):
         self.busy = busy
         self.deliveryPrice = deliveryPrice
         self.__coo = coordinats
-        Driver.__driver_index.append(self)
+        DriverIndex.add(self)
         
     
     @property
@@ -116,6 +110,16 @@ class Driver(User, Imaker):
         return self.__coo
     
     
+class DriverIndex:
+    __driver_index: list = []
+    
+    @classmethod
+    def get_driver_index(cls):
+        return cls.__driver_index.copy()
+    
+    @classmethod
+    def add(cls, driver: Driver):
+        cls.__driver_index.append(driver)
     
     
 class ATBprovider(Client, Driver, Imaker):
