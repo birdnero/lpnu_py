@@ -1,15 +1,15 @@
 from user import User, Client, Driver, ATBprovider
-from order import OrderTomato
+from order import OrderTomato, OrderService
 
 u = User(name="Andriy", surname="Fediv", login="andriy123", passwd="soelceenraet123")
-print(u.introduce())
+print(str(u))
 
 client = Client.make(u)
 client.purchases = 5
 client.bonuses = 20
 client.bankId = "1234567890123456"
 client.card = "9876543210987654"
-print(client.introduce())
+print(str(client))
 print(f"Client bankId: {client.bankId}, card: {client.card}")
 
 driver1 = Driver(
@@ -33,11 +33,11 @@ driver2 = Driver(
 print("Drivers index:", list(map(str, Driver.get_driver_index())))
 
 
-order1 = client.create_order()
+order1 = OrderService.create_order(client)
 print(f"Order created: id={order1.id}, driver={order1.driver.name}")
 
-client.addTomato(order1, "Cherry", 10)
-client.addTomato(order1, "Roma", 5)
+OrderService.addTomato(order1, "Cherry", 10)
+OrderService.addTomato(order1, "Roma", 5)
 
 
 tomatoes = OrderTomato.listPurchases(order1)
@@ -47,5 +47,5 @@ for t in tomatoes:
 
 provider = ATBprovider.make(u)
 provider.busy = False
-order2 = provider.create_order()
+order2 = OrderService.create_order(provider)
 print(f"ATBprovider order: id={order2.id}, driver={order2.driver.name}")

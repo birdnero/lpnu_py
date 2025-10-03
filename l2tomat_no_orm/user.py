@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from order import Order, OrderTomato
-
 
 class User():
     
@@ -22,7 +20,7 @@ class User():
         if v is not None and len(v) > 6:
             self.__login = v
     
-    def introduce(self):
+    def __str__(self):
         return f"Hello, I'm {self.name} {self.surname}, but for u, I am {self.__login} and {self.__class__.__name__}"
     
     @property
@@ -86,15 +84,6 @@ class Client(User, Imaker):
         if v is not None and len(v) == 16:
             self.__card = v
             
-    def create_order(self):
-        l = list(filter(lambda x: not x.busy, Driver.get_driver_index()))
-        if len(l) == 0:
-            return None
-        l[0].busy = True
-        return Order(self, l[0])
-    
-    def addTomato(self, order: Order, sort: str, amount: int):
-        return OrderTomato(order, sort, amount)
 
 
 
@@ -126,9 +115,6 @@ class Driver(User, Imaker):
     def coordinats(self):
         return self.__coo
     
-    def __str__(self):
-        return self.introduce()
-    
     
     
     
@@ -141,8 +127,4 @@ class ATBprovider(Client, Driver, Imaker):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-    def create_order(self):
-        if not self.busy:
-            self.busy
-            return Order(self, self)
     
